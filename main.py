@@ -14,3 +14,8 @@ while True:
     # main event loop
     for event in pygame.event.get():
         if event.type == 
+
+print("red")
+red = 45 - 8
+print(red)
+
