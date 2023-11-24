@@ -1,4 +1,4 @@
-import pygame, sys
+import pygame, sys, random
 
 def ball_animation():
     global ball_speed_x, ball_speed_y
@@ -8,7 +8,7 @@ def ball_animation():
     if ball.top <= 0 or ball.bottom >= HEIGHT:
         ball_speed_y *= -1
     if ball.left <= 0 or ball.right >= WIDTH:
-        ball_speed_x *= -1
+        ball_restart()
     if ball.colliderect(player) or ball.colliderect(opponent):
         ball_speed_x *= -1
 
@@ -19,12 +19,26 @@ def player_animation():
     if player.bottom >= HEIGHT:
         player.bottom = HEIGHT
 
+def opponent_animation():
+    if opponent.top < ball.y:
+        opponent.top += opponent_speed
+    if opponent.bottom > ball.y:
+        opponent.bottom -= opponent_speed
+    if opponent.top <= 0:
+        opponent.top = 0
+    if opponent.bottom >= HEIGHT:
+        opponent.bottom = HEIGHT
+def ball_restart():
+    global ball_speed_x, ball_speed_y
+    ball.center = (WIDTH/2, HEIGHT/2)
+    ball_speed_y *= random.choice((1,-1))
+    ball_speed_x *= random.choice((1,-1))
 # setup
 pygame.init()
 clock =  pygame.time.Clock()
 
 # Setup window
-TICKSPEED = 1
+TICKSPEED = 60
 WIDTH = 1280
 HEIGHT = 960
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -41,6 +55,11 @@ light_grey = (200,200,200)
 ball_speed_x = 7
 ball_speed_y = 7
 player_speed = 0
+opponent_speed = 7
+
+score = 0
+score_surf = pygame.font.Font(None, 50).render('My Score', False, light_grey)
+score_rect = score_surf.get_rect(center = (WIDTH / 2 - 30, 50))
 while True:
     # main event loop
     for event in pygame.event.get():
@@ -60,7 +79,11 @@ while True:
             
     ball_animation()
     player_animation()
+    opponent_animation()
 
+    # score counter
+    
+    
     # visuals
     screen.fill(bg_color)
     pygame.draw.rect(screen, light_grey, player)
