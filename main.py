@@ -44,22 +44,34 @@ HEIGHT = 960
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Pong')
 
+# main components
 ball = pygame.Rect(WIDTH/2 -15, HEIGHT/2 -15,30,30)
 player = pygame.Rect(WIDTH - 20, HEIGHT/2 - 70,10,140)
 opponent = pygame.Rect(10, HEIGHT/2 - 70,10,140)
 
+# colors
 bg_color = pygame.Color('grey12')
 light_grey = (200,200,200)
 
-
+# starting velocity
 ball_speed_x = 7
 ball_speed_y = 7
 player_speed = 0
 opponent_speed = 7
 
+# corner idea
+triangle1 = [(0, HEIGHT), (0, (HEIGHT-40)), (40, HEIGHT)]
+triangle2 = [(0, 0), (0, 40), (40, 0)]
+triangle3 = [(WIDTH, 0), (WIDTH, 40), ((WIDTH-40),0)]
+triangle4 = [(WIDTH, HEIGHT), (WIDTH, (HEIGHT-40)), ((WIDTH-40), HEIGHT)]
+corners = [triangle1,triangle2,triangle3, triangle4]
+
+# score
 score = 0
 score_surf = pygame.font.Font(None, 50).render('My Score', False, light_grey)
 score_rect = score_surf.get_rect(center = (WIDTH / 2 - 30, 50))
+
+
 while True:
     # main event loop
     for event in pygame.event.get():
@@ -90,7 +102,10 @@ while True:
     pygame.draw.rect(screen, light_grey, opponent)
     pygame.draw.ellipse(screen, light_grey, ball)
     pygame.draw.aaline(screen,light_grey, (WIDTH/2,0), (WIDTH/2,HEIGHT))
-
+    # Draw the triangle
+    for triangle in corners:
+        pygame.draw.polygon(screen, (light_grey), triangle)
+        
     # updating the window
     pygame.display.flip()
     clock.tick(TICKSPEED)
