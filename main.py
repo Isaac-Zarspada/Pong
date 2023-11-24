@@ -38,7 +38,7 @@ pygame.init()
 clock =  pygame.time.Clock()
 
 # Setup window
-TICKSPEED = 60
+TICKSPEED = 38
 WIDTH = 1280
 HEIGHT = 960
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -83,7 +83,7 @@ while True:
 
     # score counter
     
-    
+
     # visuals
     screen.fill(bg_color)
     pygame.draw.rect(screen, light_grey, player)
