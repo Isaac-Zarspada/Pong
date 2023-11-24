@@ -13,9 +13,11 @@ pygame.display.set_caption('Pong')
 while True:
     # main event loop
     for event in pygame.event.get():
-        if event.type == 
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
 
-print("red")
-red = 45 - 8
-print(red)
-
+    
+    # updateing the window
+    pygame.display.flip()
+    cloc
